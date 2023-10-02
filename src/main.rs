@@ -3,13 +3,35 @@ use std::{fs, env::args};
 mod elf;
 mod instruct_table;
 
-enum Intr {}
+#[derive(Debug,Clone, Copy,PartialEq)]
+enum Intr {
+    Value(u64),
+    Rax,
+    Eax,
+    ax,
+    al,
+    ah,
+}
 
+#[derive(Debug,Clone,PartialEq)]
 enum Instruct {
     Mov(Intr,Intr),
     Syscall,
+    Tag(String),
+}
+impl Instruct {
+    fn args(mnemonic : &str) -> u8 {
+        let lc_mnemonic = mnemonic.to_string().to_lowercase();
+        match lc_mnemonic.as_str() {
+            "mov" => 2,
+            "syscall" => 0,
+            _ => unimplemented!(),
+        }
+    }
 }
 
+
+#[derive(Debug,PartialEq,Clone)]
 enum Token {
     Mnemonic(String),
     Value(String),
@@ -88,6 +110,47 @@ impl Parser {
             ',' => Token::Comma,
             '#' => Token::Hash,
             _ => panic!("Not Implemented yet"),
+        }
+    }
+
+    fn parse_by_args(&mut self, args: u8) -> Vec<Intr> {
+        let mut res = Vec::new();
+        loop {
+            match self.next_token() {
+                Token::Mnemonic(val) => {
+                    
+                },
+                Token::Value(val) => {
+
+                },
+                Token::Eol => break,
+                _ => unreachable!()
+            }
+        }
+        res
+    }
+
+    fn next_instruction(&mut self) -> Instruct {
+        match self.next_token() {
+            Token::Hash => unimplemented!(),
+            Token::Mnemonic(mnemonic) => {
+                let next_token = self.next_token();
+                if next_token == Token::Colon {
+                    Instruct::Tag(mnemonic)
+                } else {
+                    let args = self.parse_by_args(Instruct::args(&mnemonic));
+                    match mnemonic.as_str() {
+                        "mov" => {
+                            Instruct::Mov(args[0], args[1])
+                        }
+                        "syscall" => {
+                            Instruct::Syscall
+                        }
+                        _ => unreachable!(),
+                    }
+                }
+            },
+            _ => unreachable!(),
         }
     }
 }
