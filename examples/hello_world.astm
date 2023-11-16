@@ -6,5 +6,5 @@ _start():
     mov rax, 1
     mov rdi, 1
     mov rsi, msg
-    puts msg __len(msg)
-    syscall 60 0
+    $puts msg __len(msg)
+    $syscall 60 0
