@@ -12,9 +12,21 @@
 #include <stdarg.h>
 #include <string.h>
 
-char* mystd_strcat_null(char* str, ...);
+#define STRING_DEFAULT_SIZE 128
+
+typedef struct {
+    char* data;
+    size_t len;
+    size_t size;
+} String;
 
 int esc_readfile(FILE *fd, char** buffer);
+
+void panic(char* err);
+String* str_new();
+void str_push(String *str, char ch);
+char* mystd_strcat_null(char* str, ...);
+
 
 #define esc_strcat(str,...) esc_strcat_null(str, __VA_ARGS__, NULL)
 #endif
@@ -52,5 +64,29 @@ char* esc_strcat_null(char* str, ...) {
     }
     va_end(ptr);
     return res;
+}
+String* str_new() {
+    String* str = (String*) malloc(sizeof(String));
+    str->data = malloc(STRING_DEFAULT_SIZE * sizeof(char));
+    str->len = 0;
+    str->size = STRING_DEFAULT_SIZE;
+    return str;
+}
+
+void str_push(String *str, char ch) {
+    str->data[str->len] = ch;
+    str->len++;
+    if (str->len > str->size - 2) {
+        if (!realloc(str->data, str->size * 2)) {
+            fprintf(stderr, "Error: Rellocating string buffer!\n");
+            return;
+        }
+        str->size = str->size * 2;
+    }
+}
+
+void panic(char* err) {
+    fprintf(stderr,"%s\n",err);
+    exit(-1);
 }
 #endif

@@ -1,7 +1,6 @@
 #import "puts"
 
 msg db [?, i8] :: "Hello world!", 10, 0
-
 _start():
     mov rax, 1
     mov rdi, 1
