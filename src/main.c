@@ -1,67 +1,81 @@
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <string.h>
 
 #define ESC_IMPLEMENTATION
 #include "../libs/esc.h"
 
-typedef char Instruct[8][32];
+const char stack[1024];
+const char ax[4];
+const char bx[4];
+const char cx[4];
+const char dx[4];
+const char si[4];
+const char di[4];
+const char bp[4];
+const char sp[4];
+const char r8[4];
+const char r9[4];
+const char r10[4];
 
-void trim_left(size_t* cur, char* line, size_t len) {
-    while (*cur < len) {
-        if (line[*cur] > 32) {
-            break;
-        } else {
-            (*cur)++;
-        }
-    }
+enum ValueType {
+    VT_NONE,
+    VT_REGISTER,
+    VT_MEM,
+    VT_LITERAL,
+};
+
+typedef enum {
+    RT_AX,
+    RT_BX,
+    RT_CX,
+    RT_DX,
+    RT_SI,
+    RT_DI,
+    RT_BP,
+    RT_SP,
+    RT_R8,
+    RT_R9,
+    RT_R10,
+} RegType;
+
+typedef struct {
+    enum ValueType type;
+    long literal;
+    uint64_t mem_offset;
+    RegType reg_type;
+    uint8_t reg_size;
+} Value;
+
+Value literal(long number) {
+    Value value;
+    value.type = VT_LITERAL;
+    value.literal = number;
+    return value; 
 }
 
-String* get_token(size_t* cur, char* line, size_t len) {
-    trim_left(cur, line, len);
-    String* nstr = str_new();
-    while (*cur < len) {
-        if (line[*cur] > 32) {
-            str_push(nstr, line[*cur]);
-            (*cur)++;
-        } else {
-            return nstr;
-        }
-    }
-    return NULL;
+Value reg(RegType rtp, uint8_t size) {
+    Value value;
+    value.type = VT_REGISTER;
+    value.reg_type = rtp;
+    value.reg_size = size;
+    return value; 
 }
 
-void parse_line(char* line, size_t len) {
-    size_t cur = 0;
-    trim_left(&cur, line, len);
-    if (cur >= len) return;
-    String* token = get_token(&cur, line, len);
-    if (token == NULL) {
-        panic("Expected a token found nothing!");
-    }
-    printf("%s\n", token->data);
-    if (strcmp(token->data, "mov") == 0) {
-        token = get_token(&cur, line, len);
-        printf("%s\n", token->data);
-    }
-    free(token);
+Value mem(uint64_t offset) {
+    Value value;
+    value.type = VT_MEM;
+    value.mem_offset = offset;
+    return value;
+}
+
+void mov(Value val1, Value val2) {
+    printf("mov %d , %d\n", val1.type, val2.type);
 }
 
 int main(void) {
-    FILE *source_fd = fopen("./examples/hello_world.astm", "r");
-    if (source_fd == NULL) {
-        printf("Error: Can not open file!");
-    }
-    char* line = NULL;
-    ssize_t read;
-    size_t len;
-    while ((read = getline(&line, &len, source_fd)) > 0) {
-        parse_line(line, read);
-    }
-
-    fclose(source_fd);
-    free(line);
+    mov(mem(0), literal(69));
     return 0;
 }
