@@ -102,10 +102,31 @@ void print_bytes(char* bytes, uint8_t size) {
 
 void mov(Value val1, Value val2) {
     if (val1.type == VT_REGISTER) {
-        if (val2.type == VT_LITERAL) {
-           int move_size = val1.reg_size;
-           char* reg = RegType2Pointer(val1.reg_type);
-           literal_to_reg(reg, val2.literal, move_size);
+        switch (val2.type) {
+            case VT_LITERAL: {
+                int move_size = val1.reg_size;
+                char* reg = RegType2Pointer(val1.reg_type);
+                literal_to_reg(reg, val2.literal, move_size);
+            }
+            break;
+            case VT_REGISTER: {
+                // TODO: Handel Sizes
+                char* reg1 = RegType2Pointer(val1.reg_type);
+                char* reg2 = RegType2Pointer(val2.reg_type);
+                if (val2.reg_size > val1.reg_size) {
+                    fprintf(stderr, "Error: cannot move from bigger to smaller register\n");
+                    exit(1);
+                }
+                for (int i=7; i >= (8 - val2.reg_size); i--) {
+                    reg1[i] = reg2[i];
+                }
+            }
+            break;
+            case VT_MEM:
+                break;
+            default:
+                fprintf(stderr, "Error: can not move to a literal\n");
+                exit(1);
         }
     } else if (val1.type == VT_MEM) {
         fprintf(stderr, "TODO: Not Implemented yet!\n");
@@ -141,6 +162,7 @@ int main(void) {
     // print_bytes(bytes, 4);
     // print_register_state();
     mov(reg(RT_AX, 4), literal(INT32_MAX));
+    mov(reg(RT_BX, 4), reg(RT_AX, 2));
     print_register_state();
     return 0;
 }
