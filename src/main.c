@@ -1,3 +1,4 @@
+#include <endian.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -86,15 +87,15 @@ Value mem(uint64_t offset) {
     return value;
 }
 
-void literal_to_le_bytes(char* bytes, long literal, uint8_t size) {
-    for (uint8_t i = 0; i < size; i++) {
-        bytes[i] = literal >> 8 * i;
+void literal_to_reg(char* bytes, long literal, uint8_t size) {
+    for (int i = 0; i < 8; i++) {
+        bytes[(8 - i) - 1] = (literal >> (8 * i)) & 0xFF;
     }
 }
 
 void print_bytes(char* bytes, uint8_t size) {
     for (int i = 0; i < size; i++) {
-        printf("%.2X ",bytes[i]);
+        printf("%02X ",(unsigned int) (bytes[i] & 0xFF));
     }
     printf("\n");
 }
@@ -104,7 +105,7 @@ void mov(Value val1, Value val2) {
         if (val2.type == VT_LITERAL) {
            int move_size = val1.reg_size;
            char* reg = RegType2Pointer(val1.reg_type);
-           literal_to_le_bytes(reg, val2.literal, move_size);
+           literal_to_reg(reg, val2.literal, move_size);
         }
     } else if (val1.type == VT_MEM) {
         fprintf(stderr, "TODO: Not Implemented yet!\n");
@@ -139,7 +140,7 @@ int main(void) {
     // literal_to_le_bytes(bytes, 69420, 4);
     // print_bytes(bytes, 4);
     // print_register_state();
-    mov(reg(RT_AX, 4), literal(69));
+    mov(reg(RT_AX, 4), literal(INT32_MAX));
     print_register_state();
     return 0;
 }
