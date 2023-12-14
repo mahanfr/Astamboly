@@ -10,7 +10,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/mahanfarzaneh2000/">
+  <a href="https://github.com/mahanfr/">
     <img src="assets/Astamboly.png" alt="Astamboly - Delicious Assembler" height="150">
   </a>
   
@@ -19,9 +19,9 @@
   <p align="center">
     Delicious Assembler and api for crating executable files on major architecture and operating systems
     <br />
-    <a href="https://github.com/mahanfarzaneh2000/Astamboly/issues">Report Bug</a>
+    <a href="https://github.com/mahanfr/Astamboly/issues">Report Bug</a>
     ·
-    <a href="https://github.com/mahanfarzaneh2000/Astamboly/issues">Request Feature</a>
+    <a href="https://github.com/mahanfr/Astamboly/issues">Request Feature</a>
   </p>
 </div>
 
@@ -30,11 +30,11 @@
 Astamboly is a persian cuisine, consisting of rice, minced meat and diced potatos wich sounds alot like assembly. Astamboly is an assembler inspired by nasm and fasm which generates native assembly
 and can be used as a programming language backend for your custom programming language.
 
-This program will be eventually used with [Nmet](https://github.com/mahanfarzaneh2000/nmet) programming language.
+This program will be eventually used with [Nmet](https://github.com/mahanfr/nmet) programming language.
 
 Use the `docs/README.md` to get started.
 
-See the [open issues](https://github.com/mahanfarzaneh2000/Astamboly/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/mahanfr/Astamboly/issues) for a full list of proposed features (and known issues).
 
 
 ## Contributing
@@ -55,16 +55,16 @@ Don't forget to give the project a star! Thanks again!
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
-[contributors-shield]: https://img.shields.io/github/contributors/mahanfarzaneh2000/Astamboly.svg?style=for-the-badge
-[contributors-url]: https://github.com/mahanfarzaneh2000/Astamboly/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/mahanfarzaneh2000/Astamboly.svg?style=for-the-badge
-[forks-url]: https://github.com/mahanfarzaneh2000/Astamboly/network/members
-[stars-shield]: https://img.shields.io/github/stars/mahanfarzaneh2000/Astamboly.svg?style=for-the-badge
-[stars-url]: https://github.com/mahanfarzaneh2000/Astamboly/stargazers
-[issues-shield]: https://img.shields.io/github/issues/mahanfarzaneh2000/Astamboly.svg?style=for-the-badge
-[issues-url]: https://github.com/mahanfarzaneh2000/Astamboly/issues
-[license-shield]: https://img.shields.io/github/license/mahanfarzaneh2000/Astamboly.svg?style=for-the-badge
-[license-url]: https://github.com/mahanfarzaneh2000/Astamboly/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/mahanfr/Astamboly.svg?style=for-the-badge
+[contributors-url]: https://github.com/mahanfr/Astamboly/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/mahanfr/Astamboly.svg?style=for-the-badge
+[forks-url]: https://github.com/mahanfr/Astamboly/network/members
+[stars-shield]: https://img.shields.io/github/stars/mahanfr/Astamboly.svg?style=for-the-badge
+[stars-url]: https://github.com/mahanfr/Astamboly/stargazers
+[issues-shield]: https://img.shields.io/github/issues/mahanfr/Astamboly.svg?style=for-the-badge
+[issues-url]: https://github.com/mahanfr/Astamboly/issues
+[license-shield]: https://img.shields.io/github/license/mahanfr/Astamboly.svg?style=for-the-badge
+[license-url]: https://github.com/mahanfr/Astamboly/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/mahanfarzaneh
 [product-screenshot]: assets/Astamboly.png
