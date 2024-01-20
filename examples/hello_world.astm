@@ -1,9 +1,0 @@
-#import "puts"
-
-msg db [?, i8] :: "Hello world!", 10, 0
-_start():
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, msg
-    $puts msg __len(msg)
-    $syscall 60 0
